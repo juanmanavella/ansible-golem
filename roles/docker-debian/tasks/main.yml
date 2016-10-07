@@ -7,14 +7,20 @@
     - python-apt
     - apt-transport-https
     - ca-certificates
+  tags:
+     - packages
 
 - name: Docker | Add apt key
   shell: apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+  tags:
+     - packages
 
 - name: Docker | Add docker repos
   apt_repository:
     repo: 'deb https://apt.dockerproject.org/repo debian-jessie main'
     state: present
+  tags:
+     - packages
 
 - name: Docker | Make sure docker and its dependencies are installed and started
   apt:
@@ -23,4 +29,5 @@
   with_items:
     - docker-engine
   notify: restart docker
-
+  tags:
+     - runtime

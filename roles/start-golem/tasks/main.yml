@@ -1,0 +1,14 @@
+---
+- name: Look for the Golem process
+  shell: ps -ef |  grep golem | grep -v grep
+  register: process_list
+  changed_when: false  
+  tags:
+    - runtime
+
+- name: Start Golem if needed
+  shell: nohup "{{ installation_dir }}/golem.sh --nogui"  &
+  when: "process_list.stdout.find('foo') == -1"  
+  tags:
+     - runtime
+
