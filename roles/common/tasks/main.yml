@@ -56,9 +56,9 @@
   tags:
      - installer
 
-- name: First time run
-# This didn't worked out also:
-#  script: "{{ installation_dir }}/golem.sh --nogui"
-  shell: sh -c "{{ installation_dir }}/golem.sh --nogui"
-  tags:
-     - installer
+#- name: First time run
+## This didn't worked out also:
+##  script: "{{ installation_dir }}/golem.sh --nogui"
+#  shell: sh -c "{{ installation_dir }}/golem.sh --nogui"
+#  tags:
+#     - installer
