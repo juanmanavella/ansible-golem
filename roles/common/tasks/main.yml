@@ -1,0 +1,64 @@
+---
+- name: Download the installer
+  get_url:
+    url: "{{ installer_url }}"
+    dest: /root
+    mode: 755
+  tags:
+     - installer
+
+- name: Upgrade packages
+  apt: upgrade=safe
+  tags:
+     - packages
+
+- name: Install packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+  - fail2ban
+  - git-core
+  - iptables
+  - vim
+  - postfix
+  - mailutils
+  - ncdu
+  - pydf
+  - screen
+  - dnsutils
+  - tmux
+  - unzip
+  tags:
+     - packages
+
+- name: Create the working dir
+  file: path="{{ installation_dir }}" state=directory mode=0755
+
+# The unarchive module seems to have issues and this below didn't work
+# See: https://github.com/ansible/ansible-modules-core/issues/932
+#
+#- name: Unzip the installer
+#  unarchive:
+#    src=/root/golem-linux.zip
+#    dest="{{ installation_dir }}"
+#  tags:
+#     - installer
+
+- name: Unzip the installer
+  shell: unzip -o /root/golem-linux.zip
+  tags:
+     - installer
+
+- name: Make the script executable
+  shell: chmod 755 "{{ installation_dir }}/golem.sh"
+  tags:
+     - installer
+
+- name: First time run
+# This didn't worked out also:
+#  script: "{{ installation_dir }}/golem.sh --nogui"
+  shell: sh -c "{{ installation_dir }}/golem.sh --nogui"
+  tags:
+     - installer

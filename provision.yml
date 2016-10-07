@@ -1,0 +1,8 @@
+- hosts: golem
+  user: root
+  vars:
+    installer_url: http://52.33.209.186/golem-linux.zip 
+    installation_dir: /root/golem
+  roles:
+   - docker-debian
+   - common
