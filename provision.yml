@@ -6,4 +6,5 @@
   roles:
    - docker-debian
    - common
-   - start-golem
+#   - start-golem
+   - { role: infrastructure-agent-ansible, license_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX }
